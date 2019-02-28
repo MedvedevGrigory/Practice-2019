@@ -1,0 +1,269 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #EAEDF1;
+}
+
+.header {
+    margin-top: 82px;
+    margin-left: 80px;
+    height: 296px;
+    width: 1347px;
+}
+
+.middle {
+    margin-top: 36px;
+    margin-left: 81px;
+    background-color: red;
+    height: 1173px;
+    width: 1348px;
+}
+
+.footer {
+    margin-top: 36px;
+    margin-left: 80px;
+    background-color: yellow;
+    height: 55px;
+    width: 1348px;
+}
+
+.h-left{
+    background-color: aqua;
+    height: 296px;
+    width: 434px;
+    display: inline-block;
+}
+
+.h-left div:nth-child(1){
+    background-color:white;
+    height: 216px;
+    width: 434px;
+    float: left;
+}
+
+.h-left div:nth-child(1) img{
+    position: relative;
+    top: 36px;
+    left: 26px;;
+}
+
+.h-left-down{
+    float: left;
+}
+
+.h-left div:nth-child(2) div:nth-child(1){
+    background-color: #16C4EC;
+    height: 80px;
+    width: 109px;
+}
+
+.h-left div:nth-child(2) img{
+    position: absolute;
+}
+
+
+.h-left div:nth-child(2) div:nth-child(1) img{
+    top: 321px;
+    left: 128px;
+    height: 11px;
+}
+
+.h-left-down p{
+    position: relative;
+    top: 44px;
+    text-align: center;
+    color: white;
+}
+
+.h-left div:nth-child(2) div:nth-child(2){
+    background-color: #FA5351;
+    height: 80px;
+    width: 109px;
+}
+
+.h-left div:nth-child(2) div:nth-child(2) img{
+    top: 317px;
+    left: 237px;
+    height: 16px;
+}
+
+.h-left div:nth-child(2) div:nth-child(3){
+    background-color: #10CDC1;
+    height: 80px;
+    width: 109px;
+}
+
+.h-left div:nth-child(2) div:nth-child(3) img{
+    top: 320px;
+    left: 341px;
+    height: 13px;
+}
+
+.h-left div:nth-child(2) div:nth-child(4){
+    background-color: #33495F;
+    height: 80px;
+    width: 107px;
+}
+
+.h-left div:nth-child(2) div:nth-child(4) img{
+    top: 317px;
+    left: 451px;
+    height: 15px;
+}
+
+.h-right{
+    margin-left: 85px;
+    margin-top: -100px;
+    background-color:white;
+    height: 296px;
+    width: 824px;
+    display: inline-block;
+}
+
+.h-right img{
+    position: absolute;
+    height: 20px;
+    top:329px;
+    display: inline-block;
+}
+
+.h-right img:nth-child(1){
+    left: 629px;
+}
+
+.h-right img:nth-child(2){
+    left: 705px;
+}
+
+.h-right img:nth-child(3){
+    height: 19px;
+    left: 777px;
+}
+
+.h-right img:nth-child(4){
+    left: 857px;
+}
+
+.h-right img:nth-child(5){
+    height: 22px;
+    top: 328px;
+    left: 932px;
+}
+
+.h-right img:nth-child(6){
+    height: 19px;
+    top: 330px;
+    left: 1002px;
+}
+
+.h-right hr{
+    position: absolute;
+    top: 293px;
+    left: 1117px;
+    border: #788695 0.5px solid;
+    width: 272px;
+}
+
+.m-left{
+    background-color:black;
+    margin-left: -1px;
+    height: 1173px;
+    width: 639px;
+    float: left;
+    clear: left;
+}
+
+.m-left ul{
+    list-style-type: none;
+}
+
+.m-left ul li::before{
+    content: url("../Image/mark.png")
+}
+
+.m-center{
+    background-color:rgb(92, 93, 168);
+    margin-left: -4px;
+    height: 1173px;
+    width: 89px;
+    display: inline-block;
+}
+
+.m-right{
+    background-color:blueviolet;
+    margin-left: -4px;
+    height: 1173px;
+    width: 625px;
+    float: right;
+}
+
+.m-left div:nth-child(1){
+    background-color: rgb(134, 218, 213);
+    height: 339px;
+    width: 635px;
+}
+
+.m-left div:nth-child(2){
+    background-color: rgb(134, 218, 213);
+    margin-top: 33px;
+    height: 321px;
+    width: 635px;
+}
+
+.m-left div:nth-child(3){
+    background-color: rgb(134, 218, 213);
+    margin-top: 34px;
+    height: 170px;
+    width: 635px;
+}
+
+.m-left div:nth-child(4){
+    background-color: rgb(134, 218, 213);
+    margin-top: 32px;
+    height: 168px;
+    width: 635px;
+}
+
+.m-right div:nth-child(1){
+    background-color: rgb(134, 218, 213);
+    height: 170px;
+    width: 625px;
+}
+
+.m-right div:nth-child(2){
+    background-color: rgb(134, 218, 213);
+    margin-top: 32px;
+    height: 170px;
+    width: 625px;
+}
+
+.m-right hr{
+    position: absolute;
+    width: 625px;
+    border: #C2CAD4 1.5px dotted;
+    top: 812px;
+}
+
+.m-right div:nth-child(3){
+    background-color: rgb(134, 218, 213);
+    margin-top: 70px;
+    height: 128px;
+    width: 625px;
+}
+
+.m-right div:nth-child(4){
+    background-color: rgb(134, 218, 213);
+    margin-top: 32px;
+    height: 130px;
+    width: 625px;
+}
+
+.m-right div:nth-child(5){
+    background-color: rgb(134, 218, 213);
+    margin-top: 34px;
+    height: 401px;
+    width: 626px;
+}
