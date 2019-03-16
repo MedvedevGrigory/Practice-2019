@@ -40,6 +40,34 @@ body{
     width: 1348px;
 }
 
+.middle::before{
+    bottom: 0;
+    position: absolute;
+    content:" ";
+    width: 6px;
+    left: 753px;
+    top: 414px;
+    height: 1140px;
+    background: #DBE1E8;
+    margin-left: -1.5px;
+}
+
+.middle::after{
+    bottom: 0;
+    position: absolute;
+    content:" 2004 ";
+    color: white;
+    text-align: center;
+    font-size: 18pt;
+    width: 72px;
+    left: 721px;
+    top: 1554px;
+    height: 34px;
+    background: #DBE1E8;
+    margin-left: -1.5px;
+    padding-top: 3px;
+}
+
 .footer{
     margin-top: 36px;
     margin-left: 80px;
@@ -210,7 +238,7 @@ body{
 }
 
 .h-right .description h1{
-    font-size: 28.3pt;
+    font-size: 28pt;
     color: #33495F;
 }
 
@@ -253,6 +281,24 @@ body{
     width: 639px;
     float: left;
     clear: left;
+}
+
+.m-left div{
+    position: relative;
+}
+
+.m-left > div::after{
+    content: "";
+    background-color:white;
+    width: 20px;
+    height: 20px;
+    line-height: 50px;
+    text-align: center;
+    position: absolute;
+    top: calc(50% - 10px);
+    border-radius: 50%;
+    right: -50px;
+    z-index: 100;
 }
 
 .m-left h2{
@@ -382,6 +428,21 @@ body{
 
 .m-right div{
     padding: 0.1px;
+    position: relative;
+}
+
+.m-right > div::before{
+    content: "";
+    background-color:#DBE1E8;
+    width: 20px;
+    height: 20px;
+    line-height: 50px;
+    text-align: center;
+    position: absolute;
+    top: calc(50% - 8px);
+    border-radius: 50%;
+    left: -59px;
+    z-index: 100;
 }
 
 .m-right div:nth-child(1){
@@ -549,6 +610,7 @@ progress{
     height: 0;
     border: 0;
     border-radius: 9px;
+    position: relative;
 }
 
 progress::-webkit-progress-bar {
@@ -557,6 +619,7 @@ progress::-webkit-progress-bar {
     border-radius: 6px;
     width: 270px;
 }
+
 progress::-webkit-progress-value {
     background: #0ECCC0;
     border-radius: 6px 0 0 6px;
@@ -570,54 +633,67 @@ progress::-webkit-progress-value {
     font-size: 12.3pt;
 }
 
-.percents img{
+#div5 .progress div{
     position: absolute;
+    background-color: #34495E;
+    top: -4px;
+    text-align: center;
+    font-size: 8pt;
+    color: white;
+    padding-top: 4px;
+    border-radius: 20%;
+    width: 38px;
+    height: 14px;
 }
 
-.percents img:nth-child(1){
-    left: 1020px;
-    top: 1337px;
+#div5 .progress div::before{ 
+    content: '.';
+    position:absolute; 
+    left: calc(50% - 2px); 
+    top: 150%; 
+    margin-top:-10px;
+    display:block;
+    width: 0px;
+    height: 0px;
+    border-left: 4px solid transparent;
+    border-top: 4px solid #34495E;
+    border-right: 4px solid transparent;
 }
 
-.percents img:nth-child(2){
-    left: 945px;
-    top: 1392px;
+#div5 .progress.pr1 div{
+    left: 196px;
 }
 
-.percents img:nth-child(3){
-    left: 1052px;
-    top: 1447px;
+#div5 .progress.pr2 div{
+    left: 171px;
 }
 
-.percents img:nth-child(4){
-    left: 1030px;
-    top: 1501px;
+#div5 .progress.pr3 div{
+    left: 123px;
 }
 
-.percents img:nth-child(5){
-    left: 1313px;
-    top: 1337px;
+#div5 .progress.pr4 div{
+    left: 186px;
 }
 
-.percents img:nth-child(6){
-    left: 1330px;
-    top: 1392px;
+#div5 .progress.pr5 div{
+    left: 231px;
 }
 
-.percents img:nth-child(7){
-    left: 1281px;
-    top: 1447px;
+#div5 .progress.pr6 div{
+    left: 138px;
 }
 
-.percents img:nth-child(8){
-    left: 1313px;
-    top: 1501px;
+#div5 .progress.pr7 div{
+    left: 205px;
 }
 
-.percents img:nth-child(9){
-    left: 719px;
-    top: 414px;
-    height: 1173px;
+#div5 .progress.pr8 div{
+    left: 171px;
+}
+
+.footer img{
+    position: absolute;
 }
 
 .footer{
@@ -627,12 +703,12 @@ progress::-webkit-progress-value {
     color: #34495E;
 }
 
-.percents img:nth-child(10){
+.footer img:nth-child(1){
     left: 454px;
     top: 1632px;
 }
 
-.percents img:nth-child(11){
+.footer img:nth-child(2){
     left: 1010px;
     top: 1632px;
 }
