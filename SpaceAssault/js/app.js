@@ -82,6 +82,7 @@ var bullets = [];
 var enemies = [];
 var explosions = [];
 var megaliths = [];
+var manna = [];
 
 var lastFire = Date.now();
 var gameTime = 0;
@@ -90,6 +91,9 @@ var terrainPattern;
 
 var score = 0;
 var scoreEl = document.getElementById('score');
+
+var scoreManna = 0;
+var scoreMannaEl = document.getElementById('scoreManna');
 
 // Speed in pixels per second
 var playerSpeed = 200;
@@ -109,14 +113,23 @@ function update(dt) {
         enemies.push({
             pos: [canvas.width,
             Math.random() * (canvas.height - 39)],
-            sprite: new Sprite('img/sprites.png', [0, 78], [80, 39],
-                6, [0, 1, 2, 3, 2, 1])
+            sprite: new Sprite('img/sprites.png', [0, 78], [80, 39], 6, [0, 1, 2, 3, 2, 1])
+        });
+    }
+
+    var maxMannaCount = Math.floor(Math.random() * (12 - 4 + 1)) + 4;
+
+    if (manna.length < maxMannaCount) {
+        manna.push({
+            pos: [Math.random() * (canvas.width - 60), Math.random() * (canvas.height - 60)],
+            sprite: new Sprite('img/sprites.png', [0, 153], [60, 60], 6, [0, 1, 0])
         });
     }
 
     checkCollisions();
 
     scoreEl.innerHTML = score;
+    scoreMannaEl.innerHTML = scoreManna;
 };
 
 function handleInput(dt) {
@@ -193,6 +206,15 @@ function updateEntities(dt) {
         // Remove if offscreen
         if (enemies[i].pos[0] + enemies[i].sprite.size[0] < 0) {
             enemies.splice(i, 1);
+            i--;
+        }
+    }
+
+    for (var i = 0; i < manna.length; i++) {
+        manna[i].sprite.update(dt);
+        // Remove if offscreen
+        if (manna[i].pos[0] + manna[i].sprite.size[0] < 0) {
+            manna.splice(i, 1);
             i--;
         }
     }
@@ -311,6 +333,23 @@ function checkCollisions() {
             gameOver();
         }
     }
+
+    for (var i = 0; i < manna.length; i++) {
+        var pos = manna[i].pos;
+        var size = manna[i].sprite.size;
+
+        if (boxCollides(pos, size, player.pos, player.sprite.size)) {
+            manna.splice(i, 1);
+            i--;
+
+            scoreManna += 1;
+
+            explosions.push({
+                pos: pos,
+                sprite: new Sprite('img/sprites.png', [0, 153], [60, 60], 9, [0, 1, 0], null, true)
+            });
+        }
+    }
 }
 
 function checkPlayerBounds() {
@@ -344,6 +383,7 @@ function render() {
     renderEntities(enemies);
     renderEntities(explosions);
     renderEntities(megaliths);
+    renderEntities(manna);
 };
 
 function renderEntities(list) {
