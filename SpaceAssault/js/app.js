@@ -302,6 +302,21 @@ function checkCollisions() {
         }
     }
 
+    for (var i = 0; i < manna.length; i++) {
+        var pos = manna[i].pos;
+        var size = manna[i].sprite.size;
+
+        for (var j = 0; j < megaliths.length; j++) {
+            var pos2 = megaliths[j].pos;
+            var size2 = megaliths[j].sprite.size;
+
+            if (boxCollides(pos, size, pos2, size2)) {
+                manna.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
     for (var i = 0; i < megaliths.length; i++) {
         var pos = megaliths[i].pos;
         var size = megaliths[i].sprite.size;
@@ -413,6 +428,7 @@ function reset() {
     isGameOver = false;
     gameTime = 0;
     score = 0;
+    scoreManna = 0;
 
     enemies = [];
     bullets = [];
