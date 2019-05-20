@@ -35,8 +35,6 @@ function main() {
 function init() {
     terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
 
-    initMegaliths();
-
     document.getElementById('play-again').addEventListener('click', function () {
         reset();
     });
@@ -432,6 +430,9 @@ function reset() {
 
     enemies = [];
     bullets = [];
+
+    megaliths = [];
+    initMegaliths();
 
     player.pos = [50, canvas.height / 2];
 };
