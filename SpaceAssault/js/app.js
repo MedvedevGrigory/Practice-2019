@@ -132,18 +132,22 @@ function update(dt) {
 
 function handleInput(dt) {
     if (input.isDown('DOWN') || input.isDown('s')) {
+        if (!megalithsCollides(0, playerSpeed * dt))
         player.pos[1] += playerSpeed * dt;
     }
 
     if (input.isDown('UP') || input.isDown('w')) {
+        if (!megalithsCollides(0, -playerSpeed * dt))
         player.pos[1] -= playerSpeed * dt;
     }
 
     if (input.isDown('LEFT') || input.isDown('a')) {
+        if (!megalithsCollides(-playerSpeed * dt, 0))
         player.pos[0] -= playerSpeed * dt;
     }
 
     if (input.isDown('RIGHT') || input.isDown('d')) {
+        if (!megalithsCollides(playerSpeed * dt, 0))
         player.pos[0] += playerSpeed * dt;
     }
 
@@ -170,6 +174,17 @@ function handleInput(dt) {
         });
 
         lastFire = Date.now();
+    }
+}
+
+function megalithsCollides(x, y) {
+    pos2 = [player.pos[0] + x, player.pos[1] + y]
+    for (var i = 0; i < megaliths.length; i++) {
+        var pos = megaliths[i].pos;
+        var size = megaliths[i].sprite.size;
+
+        if (boxCollides(pos, size, pos2, player.sprite.size))
+            return true;
     }
 }
 
@@ -340,10 +355,6 @@ function checkCollisions() {
                 bullets.splice(j, 1);
                 break;
             }
-        }
-
-        if (boxCollides(pos, size, player.pos, player.sprite.size)) {
-            gameOver();
         }
     }
 
