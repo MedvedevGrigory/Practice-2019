@@ -120,7 +120,7 @@ function update(dt) {
     if (manna.length < maxMannaCount) {
         manna.push({
             pos: [Math.random() * (canvas.width - 60), Math.random() * (canvas.height - 60)],
-            sprite: new Sprite('img/sprites.png', [0, 153], [60, 60], 6, [0, 1, 0])
+            sprite: new Sprite('img/sprites.png', [0, 153], [60, 60], 2, [0, 1, 0])
         });
     }
 
@@ -310,7 +310,7 @@ function checkCollisions() {
             var size2 = megaliths[j].sprite.size;
 
             if (boxCollides(pos, size, [pos2[0] + 60, pos2[1]], size2)) {
-                enemies[i].pos[1] += 3;
+                enemies[i].pos[1] += 2;
             }
         }
     }
@@ -370,7 +370,7 @@ function checkCollisions() {
 
             explosions.push({
                 pos: pos,
-                sprite: new Sprite('img/sprites.png', [0, 153], [60, 60], 9, [0, 1, 0], null, true)
+                sprite: new Sprite('img/sprites.png', [120, 155], [60, 60], 9, [0, 1], null, true)
             });
         }
     }
@@ -405,8 +405,8 @@ function render() {
 
     renderEntities(bullets);
     renderEntities(enemies);
-    renderEntities(explosions);
     renderEntities(megaliths);
+    renderEntities(explosions);
     renderEntities(manna);
 };
 
