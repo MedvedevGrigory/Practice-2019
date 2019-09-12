@@ -1,0 +1,15 @@
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\View.exe.config
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\View.exe
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\View.pdb
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\Controller.dll
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\Model.dll
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\Controller.pdb
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\bin\Debug\Model.pdb
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.csprojAssemblyReference.cache
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.FormMain.resources
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.Properties.Resources.resources
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.csproj.GenerateResource.cache
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.csproj.CopyComplete
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.exe
+C:\Users\User\Documents\GitHub\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.pdb

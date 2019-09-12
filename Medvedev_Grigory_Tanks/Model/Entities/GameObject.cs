@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model.Entities
 {
-    class Object
+    class GameObject
     {
-        public Object(int x, int y, int width, int height)
+        public GameObject(int x, int y, int width, int height)
         {
             X = x;
             Y = y;

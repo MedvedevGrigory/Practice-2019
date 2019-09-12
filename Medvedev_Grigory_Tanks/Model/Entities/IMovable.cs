@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Model.Entities
 {
-    enum eDirection
+    public enum eDirection
     {
         LEFT, RIGHT, UP, DOWN
     }
 
-    interface IMovable
+    public interface IMovable
     {
         eDirection Direction { get; set; }
         int Speed { get; set; }

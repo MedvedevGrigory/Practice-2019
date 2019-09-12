@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model.Entities
 {
-    class Vall : Object
+    class Vall : GameObject
     {
         public Vall(int x, int y, int width, int height) : base(x, y, width, height)
         {

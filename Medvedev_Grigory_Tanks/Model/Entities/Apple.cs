@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model.Entities
 {
-    class Apple : Object
+    class Apple : GameObject
     {
         public Apple(int x, int y, int width, int height) : base(x, y, width, height)
         {

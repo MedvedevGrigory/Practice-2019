@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model.Entities
 {
-    class Kolobok : Object, IMovable
+    class Kolobok : GameObject, IMovable
     {
         public Kolobok(int x, int y, int width, int height) : base(x, y, width, height)
         {
