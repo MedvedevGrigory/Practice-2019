@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Model
 {
-    class Tank : GameObject, IMovable
+    public class Tank : GameObject
     {
-        public Tank(int x, int y, int width, int height) : base(x, y, width, height)
+        public string spriteURL = "";
+
+        public Tank(Size size) : base(size)
         {
         }
-
-        public eDirection Direction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

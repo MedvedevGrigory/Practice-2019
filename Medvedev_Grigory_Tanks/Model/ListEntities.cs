@@ -1,15 +1,10 @@
-﻿using Model.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Model
 {
     public class ListEntities
     {
-        public KolobokView Kolobok { get; set; }
+        public Kolobok Kolobok { get; set; }
         public List<TankView> Tanks { get; set; }
         public List<AppleView> Apples { get; set; }
         public List<WallView> Walls { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Model
 {
     public enum eDirection
     {
@@ -14,6 +14,5 @@ namespace Model.Entities
     public interface IMovable
     {
         eDirection Direction { get; set; }
-        int Speed { get; set; }
     }
 }

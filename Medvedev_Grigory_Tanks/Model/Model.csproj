@@ -43,15 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ListEntities.cs" />
+    <Compile Include="Sprite.cs" />
     <Compile Include="View\AppleView.cs" />
     <Compile Include="View\BulletView.cs" />
     <Compile Include="Entities\Apple.cs" />
     <Compile Include="Entities\Bullet.cs" />
-    <Compile Include="Entities\IMovable.cs" />
+    <Compile Include="View\IMovable.cs" />
     <Compile Include="Entities\Kolobok.cs" />
     <Compile Include="Entities\GameObject.cs" />
     <Compile Include="Entities\Tank.cs" />
-    <Compile Include="Entities\Vall.cs" />
+    <Compile Include="Entities\Wall.cs" />
     <Compile Include="IGameModel.cs" />
     <Compile Include="View\IDraw.cs" />
     <Compile Include="View\KolobokView.cs" />

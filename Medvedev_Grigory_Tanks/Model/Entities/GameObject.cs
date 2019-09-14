@@ -4,21 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Model
 {
-    class GameObject
+    public struct Size
     {
-        public GameObject(int x, int y, int width, int height)
+        int width, height;
+    }
+
+    public class GameObject
+    {
+        public GameObject()
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public string SpriteURL { get; set; }
+        public Size Size { get; set; }
     }
-}
+    }

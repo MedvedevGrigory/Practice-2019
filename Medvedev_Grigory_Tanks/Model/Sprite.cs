@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Apple : GameObject
+    class Sprite
     {
-        public string spritePath = "";
-
-        public Apple() : base()
-        {
-        }
     }
 }

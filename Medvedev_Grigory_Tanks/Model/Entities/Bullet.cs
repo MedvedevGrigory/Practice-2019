@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Model
 {
-    class Bullet : GameObject, IMovable
+    public class Bullet : GameObject
     {
-        public Bullet(int x, int y, int width, int height, eDirection direction, int speed) : base(x, y, width, height)
-        {
-            Direction = direction;
-            Speed = speed;
-        }
+        public string spriteURL = "";
 
-        public eDirection Direction { get; set; }
-        public int Speed { get; set; }
+        public Bullet(Size size) : base(size)
+        {
+        }
     }
 }

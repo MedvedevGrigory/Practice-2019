@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Model
 {
-    class Vall : GameObject
+    public class Wall : GameObject
     {
-        public Vall(int x, int y, int width, int height) : base(x, y, width, height)
+        public string spriteURL = "";
+
+        public Wall(Size size) : base(size)
         {
         }
     }
