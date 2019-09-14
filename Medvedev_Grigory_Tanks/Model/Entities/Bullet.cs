@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Bullet : GameObject
+    public class Bullet
     {
-        public string spriteURL = "";
+        public string spritePath = "";
+        public Size size = new Size() { width = 20, height = 20 };
 
-        public Bullet(Size size) : base(size)
-        {
-        }
     }
 }

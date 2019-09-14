@@ -22,12 +22,12 @@ namespace View
             int mapHeight = 500;
 
             ListEntities entities = new ListEntities();
-            IGameModel gameModel = new GameModel(mapWidth, mapHeight, entities);
-            IPackmanController controller = new PackmanController(gameModel);
+            GameModel gameModel = new GameModel(mapWidth, mapHeight, entities);
+            PackmanController controller = new PackmanController(gameModel);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain(controller, entities, mapWidth, mapHeight));
+            Application.Run(new FormMain(controller, entities, gameModel, mapWidth, mapHeight));
         }
     }
 }

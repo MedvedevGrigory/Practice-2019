@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Controller
 {
-    public class PackmanController : IPackmanController
+    public class PackmanController
     {
-        private IGameModel gameModel;
+        private GameModel gameModel;
 
-        public PackmanController(IGameModel gameModel)
+        public PackmanController(GameModel gameModel)
         {
             this.gameModel = gameModel;
         }
@@ -24,6 +24,16 @@ namespace Controller
         }
 
         public void Update(int dt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void ChangePackmanDirection(eDirection direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void Shoot()
         {
             throw new NotImplementedException();
         }

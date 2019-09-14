@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Apple : GameObject
+    public class Apple
     {
         public string spritePath = "";
-
-        public Apple() : base()
-        {
-        }
+        public Size size = new Size() { width = 20, height = 20 };
     }
 }

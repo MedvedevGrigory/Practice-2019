@@ -5,7 +5,7 @@ namespace Model
 {
     public class AppleView : Apple, IDraw
     {
-        public AppleView(Size size, Pos pos) : base(size)
+        public AppleView(Pos pos)
         {
             Pos = pos;
         }

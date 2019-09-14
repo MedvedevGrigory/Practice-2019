@@ -50,10 +50,8 @@
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="View\IMovable.cs" />
     <Compile Include="Entities\Kolobok.cs" />
-    <Compile Include="Entities\GameObject.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="Entities\Wall.cs" />
-    <Compile Include="IGameModel.cs" />
     <Compile Include="View\IDraw.cs" />
     <Compile Include="View\KolobokView.cs" />
     <Compile Include="GameModel.cs" />

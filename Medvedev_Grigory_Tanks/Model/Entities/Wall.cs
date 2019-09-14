@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Wall : GameObject
+    public class Wall
     {
-        public string spriteURL = "";
+        public string spritePath = "";
+        public Size size = new Size() { width = 20, height = 20 };
 
-        public Wall(Size size) : base(size)
-        {
-        }
     }
 }

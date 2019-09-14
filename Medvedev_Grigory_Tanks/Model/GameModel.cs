@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Entities;
 
 namespace Model
 {
-    public class GameModel : IGameModel
+    public struct Pos
+    {
+        public int x, y;
+    }
+
+    public struct Size
+    {
+        public int width, height;
+    }
+
+    public class GameModel
     {
         public int Score { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int MapWidth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -22,7 +27,7 @@ namespace Model
             Entities = entities;
         }
 
-        public void ChangeDirection(eDirection direction)
+        public void ChangePackmanDirection(eDirection direction)
         {
             throw new NotImplementedException();
         }
@@ -43,6 +48,11 @@ namespace Model
         }
 
         public void Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeTankDirection(eDirection direction)
         {
             throw new NotImplementedException();
         }

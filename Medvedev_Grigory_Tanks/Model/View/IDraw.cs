@@ -2,11 +2,6 @@
 
 namespace Model
 {
-    public struct Pos
-    {
-        int x, y;
-    }
-
     interface IDraw
     {
         Pos Pos { get; set; }

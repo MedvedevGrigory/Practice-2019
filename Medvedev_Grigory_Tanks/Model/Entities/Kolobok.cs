@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Kolobok : GameObject
+    public class Kolobok
     {
-        public string spriteURL = "";
+        public string spritePath = "";
+        public Size size = new Size() { width = 20, height = 20 };
 
-        public Kolobok(Size size) : base(size)
-        {
-        }
     }
 }

@@ -14,19 +14,22 @@ namespace View
 {
     public partial class FormMain : Form
     {
-        public IPackmanController Controller { get; }
+        public PackmanController Controller { get; }
+        public ListEntities Entities { get; }
+        public GameModel GameModel { get; }
         public int MapWidth { get; }
         public int MapHeight { get; }
 
         bool gameOver = false;
 
-        public ListEntities entities = new ListEntities();
+        public int Score { get; set; }
 
-        public FormMain(IPackmanController controller, ListEntities entities, int mapWidth, int mapHeight)
+        public FormMain(PackmanController controller, ListEntities entities, GameModel gameModel, int mapWidth, int mapHeight)
         {
             InitializeComponent();
             Controller = controller;
-            this.entities = entities;
+            Entities = entities;
+            GameModel = gameModel;
             MapWidth = mapWidth;
             MapHeight = mapHeight;
             controller.NewGame();
@@ -42,31 +45,61 @@ namespace View
             {
                 graphics.FillRectangle(new SolidBrush(Color.DarkGray), 0, 0, MapWidth, MapHeight);
 
-                entities.Kolobok.Draw(graphics);
+                Entities.Kolobok.Draw(graphics);
 
-                foreach (var wall in entities.Walls)
+                foreach (var wall in Entities.Walls)
                 {
                     wall.Draw(graphics);
                 }
 
-                foreach (var apple in entities.Apples)
+                foreach (var apple in Entities.Apples)
                 {
                     apple.Draw(graphics);
                 }
 
-                foreach (var tank in entities.Tanks)
+                foreach (var tank in Entities.Tanks)
                 {
                     tank.Draw(graphics);
                 }
 
-                foreach (var bullet in entities.Bullets)
+                foreach (var bullet in Entities.Bullets)
                 {
                     bullet.Draw(graphics);
                 }
-
+            }
+            else
+            {
+                graphics.FillRectangle(new SolidBrush(Color.DarkGray), 0, 0, MapWidth, MapHeight);
+                graphics.DrawString("Game over", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 300, 200);
 
             }
         }
 
+        private void FormMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    PackmanController.ChangePackmanDirection(eDirection.UP);
+                    break;
+                case Keys.A:
+                    PackmanController.ChangePackmanDirection(eDirection.LEFT);
+                    break;
+                case Keys.S:
+                    PackmanController.ChangePackmanDirection(eDirection.DOWN);
+                    break;
+                case Keys.D:
+                    PackmanController.ChangePackmanDirection(eDirection.RIGHT);
+                    break;
+                case Keys.R:
+                    FormReport form = new FormReport();
+                    form.Show();
+                    break;
+                case Keys.Space:
+                    PackmanController.Shoot();
+                    break;
+                default:break;
+            }
+        }
     }
 }
