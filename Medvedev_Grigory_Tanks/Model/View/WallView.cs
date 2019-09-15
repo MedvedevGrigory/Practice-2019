@@ -3,14 +3,20 @@ using System.Drawing;
 
 namespace Model
 {
-    public class WallView 
+    public class WallView : Wall
     {
-        public Position Pos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Size Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Sprite spriteDraw = new Sprite();
+        public Position Pos;
+
+        public WallView(Position pos)
+        {
+            Pos = pos;
+            sprite = Image.FromFile(@"..\..\..\Sprites\Wall.png");
+        }
 
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
+            spriteDraw.Draw(graphics, Pos, size, sprite);
         }
     }
 }

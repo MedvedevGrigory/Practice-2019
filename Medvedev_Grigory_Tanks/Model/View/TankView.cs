@@ -3,14 +3,21 @@ using System.Drawing;
 
 namespace Model
 {
-    public class TankView
+    public class TankView : Tank
     {
-        public Position Pos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Size Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Sprite spriteDraw = new Sprite();
+        public Position Pos;
+
+        public TankView(Position pos)
+        {
+            Pos = pos;
+        }
+
+        public Direction Direction { get; set; } = Direction.RIGHT;
 
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
+            spriteDraw.Draw(graphics, Pos, size, sprite);
         }
     }
 }

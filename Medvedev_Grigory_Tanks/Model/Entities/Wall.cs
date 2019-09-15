@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Wall
+    public class Wall : FixObject
     {
-        public Size size = new Size() { width = 20, height = 20 };
-
+        public Size size = new Size() { width = 50, height = 50 };
     }
 }

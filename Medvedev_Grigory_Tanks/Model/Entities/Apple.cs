@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Apple
+    public class Apple : FixObject
     {
-        public Size size = new Size() { width = 20, height = 20 };
+        public static Size size = new Size()
+        {
+            width = 50,
+            height = 50
+        };
     }
 }

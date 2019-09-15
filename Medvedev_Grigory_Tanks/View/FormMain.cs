@@ -19,6 +19,8 @@ namespace View
         public GameModel GameModel { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
+        Bitmap map;
+        Graphics graphics;
 
         bool gameOver = false;
 
@@ -32,31 +34,31 @@ namespace View
             GameModel = gameModel;
             MapWidth = mapWidth;
             MapHeight = mapHeight;
+
             controller.NewGame();
+
+            map = new Bitmap(MapWidth, MapHeight);
+            graphics = Graphics.FromImage(map);
             Draw();
         }
 
         private void Draw()
         {
-            Bitmap map = new Bitmap(MapWidth, MapHeight);
-            Graphics graphics = Graphics.FromImage(map);
-
             if (!gameOver)
             {
                 graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
                 
                 Entities.Kolobok.Draw(graphics);
-                /*
-                foreach (var wall in Entities.Walls)
-                {
-                    wall.Draw(graphics);
-                }
-
+                
                 foreach (var apple in Entities.Apples)
                 {
                     apple.Draw(graphics);
                 }
-
+                foreach (var wall in Entities.Walls)
+                {
+                    wall.Draw(graphics);
+                }
+                /*
                 foreach (var tank in Entities.Tanks)
                 {
                     tank.Draw(graphics);
@@ -71,7 +73,6 @@ namespace View
             {
                 graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
                 graphics.DrawString("Game over", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 300, 200);
-
             }
             pictureBox.Image = map;
         }
@@ -81,16 +82,16 @@ namespace View
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Controller.ChangeKolobokDirection(eDirection.UP);
+                    Controller.ChangeKolobokDirection(Direction.UP);
                     break;
                 case Keys.A:
-                    Controller.ChangeKolobokDirection(eDirection.LEFT);
+                    Controller.ChangeKolobokDirection(Direction.LEFT);
                     break;
                 case Keys.S:
-                    Controller.ChangeKolobokDirection(eDirection.DOWN);
+                    Controller.ChangeKolobokDirection(Direction.DOWN);
                     break;
                 case Keys.D:
-                    Controller.ChangeKolobokDirection(eDirection.RIGHT);
+                    Controller.ChangeKolobokDirection(Direction.RIGHT);
                     break;
                 case Keys.R:
                     FormReport form = new FormReport();
@@ -105,7 +106,7 @@ namespace View
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            Controller.Update(GameTimer.Interval);
+            Controller.Update();
             Draw();
         }
     }

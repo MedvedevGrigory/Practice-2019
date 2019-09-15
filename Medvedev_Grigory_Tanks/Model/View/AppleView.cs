@@ -5,16 +5,18 @@ namespace Model
 {
     public class AppleView : Apple
     {
-        Sprite sprite = new Sprite();
+        Sprite spriteDrow = new Sprite();
         Position Pos;
 
         public AppleView(Position pos)
         {
             Pos = pos;
+            sprite = Image.FromFile(@"..\..\..\Sprites\KolobokR.png");
         }
-        
+
         public void Draw(Graphics graphics)
         {
+            spriteDrow.Draw(graphics, Pos, size, sprite);
         }
     }
 }

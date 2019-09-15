@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Tank
+    public class Tank : MovableObject
     {
-        public Size size = new Size() { width = 20, height = 20 };
+        public Size size = new Size() { width = 50, height = 50 };
     }
 }

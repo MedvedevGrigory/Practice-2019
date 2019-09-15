@@ -5,19 +5,20 @@ namespace Model
 {
     public class KolobokView : Kolobok, IMovable
     {
-        Sprite sprite = new Sprite();
+        Sprite spriteDrow = new Sprite();
         public Position Pos;
 
         public KolobokView(Position pos)
         {
             Pos = pos;
+            sprite = Image.FromFile(@"..\..\..\Sprites\KolobokR.png");
         }
 
-        public eDirection Direction { get; set; } = eDirection.RIGHT;
+        public Direction Direction { get; set; } = Direction.RIGHT;
 
         public void Draw(Graphics graphics)
         {
-            sprite.DrawKolobok(graphics, Pos, size);
+            spriteDrow.Draw(graphics, Pos, size, sprite);
         }
     }
 }

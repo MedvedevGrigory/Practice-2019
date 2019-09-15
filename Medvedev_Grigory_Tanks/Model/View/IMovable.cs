@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum eDirection
+    public enum Direction
     {
         LEFT, RIGHT, UP, DOWN
     }
 
     public interface IMovable
     {
-        eDirection Direction { get; set; }
+        Direction Direction { get; set; }
     }
 }

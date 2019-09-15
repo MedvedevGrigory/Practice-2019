@@ -23,14 +23,14 @@ namespace Controller
             gameModel.NewGame();
         }
 
-        public void Update(int dt)
+        public void Update()
         {
             gameModel.Update();
         }
 
-        public void ChangeKolobokDirection(eDirection direction)
+        public void ChangeKolobokDirection(Direction direction)
         {
-            gameModel.ChangePackmanDirection(direction);
+            gameModel.ChangeKolobokDirection(direction);
         }
 
         public static void Shoot()

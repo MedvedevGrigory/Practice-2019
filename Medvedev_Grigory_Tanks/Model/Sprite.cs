@@ -9,10 +9,25 @@ namespace Model
 {
     class Sprite
     {
-        internal void DrawKolobok(Graphics graphics, Position pos, Size size)
+        bool changeSprite = false;
+        int i = 0;
+        
+        internal void Draw(Graphics graphics, Position pos, Size size, Image sprite)
         {
-            Image image = Image.FromFile(@"..\..\..\Sprites\KolobokR.png");
-            graphics.DrawImage(image, new Rectangle(pos.x, pos.y, size.width, size.height));
+            if (changeSprite)
+            {
+                graphics.DrawImage(sprite, new Rectangle(pos.x, pos.y, size.width, size.height), 0, 0, size.width, size.height, GraphicsUnit.Pixel);
+            }
+            else
+            {
+                graphics.DrawImage(sprite, new Rectangle(pos.x, pos.y, size.width, size.height), size.width, 0, size.width, size.height, GraphicsUnit.Pixel);
+            }
+
+            i++;
+            if (i % 5 == 0)
+            {
+                changeSprite = !changeSprite;
+            }
         }
     }
 }
