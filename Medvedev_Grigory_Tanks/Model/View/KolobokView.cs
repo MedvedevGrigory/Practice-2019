@@ -3,14 +3,21 @@ using System.Drawing;
 
 namespace Model
 {
-    public class KolobokView : IDraw
+    public class KolobokView : Kolobok, IMovable
     {
-        public Pos Pos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Size Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Sprite sprite = new Sprite();
+        public Position Pos;
+
+        public KolobokView(Position pos)
+        {
+            Pos = pos;
+        }
+
+        public eDirection Direction { get; set; } = eDirection.RIGHT;
 
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
+            sprite.DrawKolobok(graphics, Pos, size);
         }
     }
 }

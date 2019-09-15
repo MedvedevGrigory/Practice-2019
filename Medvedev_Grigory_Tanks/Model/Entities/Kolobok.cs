@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Kolobok
+    public class Kolobok : MovableObject
     {
-        public string spritePath = "";
-        public Size size = new Size() { width = 20, height = 20 };
+        public Size size = new Size() { width = 50, height = 50 };
 
     }
 }

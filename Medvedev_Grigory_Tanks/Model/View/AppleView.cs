@@ -3,18 +3,18 @@ using System.Drawing;
 
 namespace Model
 {
-    public class AppleView : Apple, IDraw
+    public class AppleView : Apple
     {
-        public AppleView(Pos pos)
+        Sprite sprite = new Sprite();
+        Position Pos;
+
+        public AppleView(Position pos)
         {
             Pos = pos;
         }
-
-        public Pos Pos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
         }
     }
 }

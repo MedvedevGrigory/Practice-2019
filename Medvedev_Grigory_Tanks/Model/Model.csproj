@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\FixObject.cs" />
+    <Compile Include="Entities\GameObject.cs" />
+    <Compile Include="Entities\MovableObject.cs" />
     <Compile Include="ListEntities.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="View\AppleView.cs" />
@@ -52,7 +55,6 @@
     <Compile Include="Entities\Kolobok.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="Entities\Wall.cs" />
-    <Compile Include="View\IDraw.cs" />
     <Compile Include="View\KolobokView.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

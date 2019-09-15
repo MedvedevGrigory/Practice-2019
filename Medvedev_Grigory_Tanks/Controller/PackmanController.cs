@@ -9,7 +9,7 @@ namespace Controller
 {
     public class PackmanController
     {
-        private GameModel gameModel;
+        GameModel gameModel;
 
         public PackmanController(GameModel gameModel)
         {
@@ -20,17 +20,17 @@ namespace Controller
 
         public void NewGame()
         {
-            throw new NotImplementedException();
+            gameModel.NewGame();
         }
 
         public void Update(int dt)
         {
-            throw new NotImplementedException();
+            gameModel.Update();
         }
 
-        public static void ChangePackmanDirection(eDirection direction)
+        public void ChangeKolobokDirection(eDirection direction)
         {
-            throw new NotImplementedException();
+            gameModel.ChangePackmanDirection(direction);
         }
 
         public static void Shoot()

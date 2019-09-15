@@ -8,8 +8,6 @@ namespace Model
 {
     public class Tank
     {
-        public string spritePath = "";
         public Size size = new Size() { width = 20, height = 20 };
-
     }
 }

@@ -16,3 +16,12 @@ C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\
 C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.csproj.CopyComplete
 C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.dll
 C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.pdb
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\bin\Debug\Controller.dll
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\bin\Debug\Controller.pdb
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\bin\Debug\Model.dll
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\bin\Debug\Model.pdb
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.csprojAssemblyReference.cache
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.csproj.CoreCompileInputs.cache
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.csproj.CopyComplete
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.dll
+C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Controller\obj\Debug\Controller.pdb

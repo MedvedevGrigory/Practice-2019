@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public struct Pos
+    public struct Position
     {
         public int x, y;
     }
@@ -15,10 +15,11 @@ namespace Model
     public class GameModel
     {
         public int Score { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int MapWidth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int MapHeight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int MapWidth { get; set; }
+        public int MapHeight { get; set; }
 
         public ListEntities Entities;
+        int speed;
 
         public GameModel(int mapWidth, int mapHeight, ListEntities entities)
         {
@@ -29,7 +30,7 @@ namespace Model
 
         public void ChangePackmanDirection(eDirection direction)
         {
-            throw new NotImplementedException();
+            Entities.Kolobok.Direction = direction;
         }
 
         public void GameOver()
@@ -37,9 +38,10 @@ namespace Model
             throw new NotImplementedException();
         }
 
-        public void NewGame(bool gameOver)
+        public void NewGame()
         {
-            throw new NotImplementedException();
+            Position pos = new Position() { x = 10, y = 400 };
+            Entities.Kolobok = new KolobokView(pos);
         }
 
         public void Shoot()
@@ -49,7 +51,30 @@ namespace Model
 
         public void Update()
         {
-            throw new NotImplementedException();
+            Move();
+        }
+
+        private void Move()
+        {
+            speed = Entities.Kolobok.speed;
+            switch (Entities.Kolobok.Direction)
+            {
+                case eDirection.LEFT:
+                    Entities.Kolobok.Pos.x -= speed;
+                    break;
+
+                case eDirection.RIGHT:
+                    Entities.Kolobok.Pos.x += speed;
+                    break;
+
+                case eDirection.UP:
+                    Entities.Kolobok.Pos.y -= speed;
+                    break;
+
+                case eDirection.DOWN:
+                    Entities.Kolobok.Pos.y += speed;
+                    break;
+            }
         }
 
         public void ChangeTankDirection(eDirection direction)

@@ -14,11 +14,11 @@ namespace View
 {
     public partial class FormMain : Form
     {
-        public PackmanController Controller { get; }
-        public ListEntities Entities { get; }
-        public GameModel GameModel { get; }
-        public int MapWidth { get; }
-        public int MapHeight { get; }
+        public PackmanController Controller { get; set; }
+        public ListEntities Entities { get; set; }
+        public GameModel GameModel { get; set; }
+        public int MapWidth { get; set; }
+        public int MapHeight { get; set; }
 
         bool gameOver = false;
 
@@ -43,10 +43,10 @@ namespace View
 
             if (!gameOver)
             {
-                graphics.FillRectangle(new SolidBrush(Color.DarkGray), 0, 0, MapWidth, MapHeight);
-
+                graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
+                
                 Entities.Kolobok.Draw(graphics);
-
+                /*
                 foreach (var wall in Entities.Walls)
                 {
                     wall.Draw(graphics);
@@ -65,14 +65,15 @@ namespace View
                 foreach (var bullet in Entities.Bullets)
                 {
                     bullet.Draw(graphics);
-                }
+                }*/
             }
             else
             {
-                graphics.FillRectangle(new SolidBrush(Color.DarkGray), 0, 0, MapWidth, MapHeight);
+                graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
                 graphics.DrawString("Game over", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 300, 200);
 
             }
+            pictureBox.Image = map;
         }
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
@@ -80,16 +81,16 @@ namespace View
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    PackmanController.ChangePackmanDirection(eDirection.UP);
+                    Controller.ChangeKolobokDirection(eDirection.UP);
                     break;
                 case Keys.A:
-                    PackmanController.ChangePackmanDirection(eDirection.LEFT);
+                    Controller.ChangeKolobokDirection(eDirection.LEFT);
                     break;
                 case Keys.S:
-                    PackmanController.ChangePackmanDirection(eDirection.DOWN);
+                    Controller.ChangeKolobokDirection(eDirection.DOWN);
                     break;
                 case Keys.D:
-                    PackmanController.ChangePackmanDirection(eDirection.RIGHT);
+                    Controller.ChangeKolobokDirection(eDirection.RIGHT);
                     break;
                 case Keys.R:
                     FormReport form = new FormReport();
@@ -100,6 +101,12 @@ namespace View
                     break;
                 default:break;
             }
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            Controller.Update(GameTimer.Interval);
+            Draw();
         }
     }
 }
