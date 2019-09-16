@@ -14,3 +14,5 @@ C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\obj\Debug
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\obj\Debug\Model.dll
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\obj\Debug\Model.pdb
+C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\bin\Debug\Model.dll
+C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\Model\bin\Debug\Model.pdb

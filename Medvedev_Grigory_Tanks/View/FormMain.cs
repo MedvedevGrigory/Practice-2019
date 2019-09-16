@@ -21,9 +21,7 @@ namespace View
         public int MapHeight { get; set; }
         Bitmap map;
         Graphics graphics;
-
-        bool gameOver = false;
-
+        public bool GameOver => Controller.GameOver;
         public int Score { get; set; }
 
         public FormMain(PackmanController controller, ListEntities entities, GameModel gameModel, int mapWidth, int mapHeight)
@@ -44,26 +42,26 @@ namespace View
 
         private void Draw()
         {
-            if (!gameOver)
+            if (!GameOver)
             {
                 graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
                 
                 Entities.Kolobok.Draw(graphics);
-                
-                foreach (var apple in Entities.Apples)
-                {
-                    apple.Draw(graphics);
-                }
+
+                //foreach (var apple in Entities.Apples)
+                //{
+                //    apple.Draw(graphics);
+                //}
                 foreach (var wall in Entities.Walls)
                 {
                     wall.Draw(graphics);
                 }
-                /*
+                
                 foreach (var tank in Entities.Tanks)
                 {
                     tank.Draw(graphics);
                 }
-
+                /*
                 foreach (var bullet in Entities.Bullets)
                 {
                     bullet.Draw(graphics);

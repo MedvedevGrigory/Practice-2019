@@ -8,6 +8,10 @@ namespace Model
 {
     public class Tank : MovableObject
     {
-        public Size size = new Size() { width = 50, height = 50 };
+        public static Size size = new Size()
+        {
+            width = 50,
+            height = 50
+        };
     }
 }

@@ -10,6 +10,7 @@ namespace Controller
     public class PackmanController
     {
         GameModel gameModel;
+        public bool GameOver => gameModel.GameOver;
 
         public PackmanController(GameModel gameModel)
         {

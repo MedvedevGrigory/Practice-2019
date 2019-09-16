@@ -9,25 +9,18 @@ namespace Model
 {
     class Sprite
     {
-        bool changeSprite = false;
-        int i = 0;
+        private const int TimeFactor = 5;
+        private const double Increment = 1.0 / TimeFactor;
+
+        private const int FrameCount = 2;
+        private double Counter = 0;
         
         internal void Draw(Graphics graphics, Position pos, Size size, Image sprite)
         {
-            if (changeSprite)
-            {
-                graphics.DrawImage(sprite, new Rectangle(pos.x, pos.y, size.width, size.height), 0, 0, size.width, size.height, GraphicsUnit.Pixel);
-            }
-            else
-            {
-                graphics.DrawImage(sprite, new Rectangle(pos.x, pos.y, size.width, size.height), size.width, 0, size.width, size.height, GraphicsUnit.Pixel);
-            }
-
-            i++;
-            if (i % 5 == 0)
-            {
-                changeSprite = !changeSprite;
-            }
+            int currentFrame = (int)Counter;
+            Rectangle destRect = new Rectangle(pos.x, pos.y, size.width, size.height);
+            graphics.DrawImage(sprite, destRect, size.width * currentFrame, 0, size.width, size.height, GraphicsUnit.Pixel);
+            Counter = (Counter + Increment) % FrameCount;
         }
     }
 }
