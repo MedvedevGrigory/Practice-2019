@@ -20,17 +20,21 @@ namespace Model
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
 
-        public bool GameOver { get; set; }
-
+        public bool IsGameOver { get; set; }
 
         public ListEntities Entities;
         int speed;
 
-        public GameModel(int mapWidth, int mapHeight, ListEntities entities)
+        public int maxAppleCount = 5;
+        public int maxTankCount = 5;
+
+        public GameModel(int mapWidth, int mapHeight, ListEntities entities, int maxAppleCount, int maxTankCount)
         {
             MapWidth = mapWidth;
             MapHeight = mapHeight;
             Entities = entities;
+            this.maxAppleCount = maxAppleCount;
+            this.maxTankCount = maxTankCount;
         }
 
         public void ChangeKolobokDirection(Direction direction)
@@ -57,7 +61,9 @@ namespace Model
 
         public void NewGame()
         {
-            Position pos = new Position() { x = 10, y = 400 };
+            IsGameOver = false;
+            Score = 0;
+            Position pos = new Position() { x = 10, y = 450 };
             Entities.Kolobok = new KolobokView(pos);
 
             Entities.Walls = new List<WallView>();
@@ -66,12 +72,22 @@ namespace Model
             Entities.Apples = new List<AppleView>();
 
             Entities.Tanks = new List<TankView>();
+
+            Entities.Bullets = new List<BulletView>();
         }
 
         private void InitWalls()
         {
             Position pos = new Position() { x = 60, y = 60 };
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 2; i++)
+            {
+                Entities.Walls.Add(new WallView(pos));
+                pos.y += 50;
+            }
+
+            pos.x = 60;
+            pos.y = 260;
+            for (int i = 0; i < 2; i++)
             {
                 Entities.Walls.Add(new WallView(pos));
                 pos.y += 50;
@@ -128,23 +144,36 @@ namespace Model
 
         public void Shoot()
         {
-            throw new NotImplementedException();
+            KolobokView kolobok = Entities.Kolobok;
+            Position pos = new Position()
+            {
+                x = kolobok.Pos.x + kolobok.size.width / 2 - Bullet.size.width / 2,
+                y = kolobok.Pos.y + kolobok.size.height / 2 - Bullet.size.height / 2
+            };
+
+            Entities.Bullets.Add(new BulletView(pos, kolobok.Direction, false));
         }
 
         public void Update()
         {
-            if (Entities.Apples.Count < 5)
+            if (Entities.Apples.Count < maxAppleCount)
             {
                 InitApple();
             }
 
-            if (Entities.Tanks.Count < 5)
+            if (Entities.Tanks.Count < maxTankCount)
             {
                 InitTank();
             }
 
             CheckCollisions();
             RandomChangeTankDirection();
+
+            foreach (var tank in Entities.Tanks)
+            {
+                TankShoot(tank, Tank.size, Entities.Kolobok);
+            }
+
             ChangeTankSprite();
             Move();
         }
@@ -186,35 +215,53 @@ namespace Model
 
         private void CheckCollisions()
         {
-            CheckPlayerBounds();
+            CheckKolobokCollisoins();
 
+            CheckTanksCollisions();
+
+            foreach (var bullet in Entities.Bullets)
+            {
+                if (CheckBulletCollisions(bullet))
+                {
+                    break;
+                }
+            }
+        }
+
+        private void CheckTanksCollisions()
+        {
             foreach (var tank in Entities.Tanks)
             {
                 Size sizeTank = Tank.size;
+                KolobokView kolobok = Entities.Kolobok;
 
-                if (boxCollides(tank.Pos, sizeTank, Entities.Kolobok.Pos, Entities.Kolobok.size))
+                if (BoxCollides(tank.Pos, sizeTank, kolobok.Pos, kolobok.size))
                 {
-                    //GameOver = true;
+                    GameOver();
+                    return;
                 }
 
-                if ((tank.Pos.x < 0) || 
-                    (tank.Pos.x > MapWidth - Tank.size.width)||
-                    (tank.Pos.y < 0)||
+
+                if ((tank.Pos.x < 0) ||
+                    (tank.Pos.x > MapWidth - Tank.size.width) ||
+                    (tank.Pos.y < 0) ||
                     (tank.Pos.y > MapHeight - Tank.size.height))
                 {
                     ChangeTankDirection(tank, tank.Direction);
+                    MoveTank(tank);
                 }
 
                 foreach (var otherTank in Entities.Tanks)
                 {
                     if (otherTank != tank)
                     {
-                        if (boxCollides(tank.Pos, sizeTank, otherTank.Pos, sizeTank))
+                        if (BoxCollides(tank.Pos, sizeTank, otherTank.Pos, sizeTank))
                         {
                             ChangeTankDirection(tank, tank.Direction);
-                            ChangeTankDirection(otherTank, otherTank.Direction);
+                            MoveTank(tank);
+                            //ChangeTankDirection(otherTank, otherTank.Direction);
                             break;
-                        } 
+                        }
                     }
                 }
 
@@ -223,18 +270,212 @@ namespace Model
                     Position posWall = wall.Pos;
                     Size sizeWall = wall.size;
 
-                    if (boxCollides(tank.Pos, sizeTank, posWall, sizeWall))
+                    if (BoxCollides(tank.Pos, sizeTank, posWall, sizeWall))
                     {
                         ChangeTankDirection(tank, tank.Direction);
+                        MoveTank(tank);
                         break;
                     }
                 }
             }
         }
 
-        private bool boxCollides(Position pos, Size size, Position pos2, Size size2)
+        private void MoveTank(TankView tank)
         {
-            return collides(pos.x,
+            switch (tank.Direction)
+            {
+                case Direction.LEFT:
+                    tank.Pos.x -= speed;
+                    break;
+
+                case Direction.RIGHT:
+                    tank.Pos.x += speed;
+                    break;
+
+                case Direction.UP:
+                    tank.Pos.y -= speed;
+                    break;
+
+                case Direction.DOWN:
+                    tank.Pos.y += speed;
+                    break;
+            }
+        }
+
+        private bool CheckBulletCollisions(BulletView bullet)
+        {
+            Size sizeBullet = Bullet.size;
+            Position posBullet = bullet.Pos;
+
+            if (bullet.isEnemyBullet)
+            {
+                if (BoxCollides(posBullet, sizeBullet, Entities.Kolobok.Pos, Entities.Kolobok.size))
+                {
+                    GameOver();
+                    return true;
+                } 
+            }
+
+            if ((posBullet.x < 0) ||
+                (posBullet.x > MapWidth - Bullet.size.width) ||
+                (posBullet.y < 0) ||
+                (posBullet.y > MapHeight - Bullet.size.height))
+            {
+                Entities.Bullets.Remove(bullet);
+                return true;
+            }
+
+            foreach (var wall in Entities.Walls)
+            {
+                Position posWall = wall.Pos;
+                Size sizeWall = wall.size;
+
+                if (BoxCollides(posBullet, sizeBullet, posWall, sizeWall))
+                {
+                    Entities.Bullets.Remove(bullet);
+                    return true;
+                }
+            }
+
+            if (!bullet.isEnemyBullet)
+            {
+                foreach (var tank in Entities.Tanks)
+                {
+                    Position posTank = tank.Pos;
+                    Size sizeTank = Tank.size;
+
+                    if (BoxCollides(posBullet, sizeBullet, posTank, sizeTank))
+                    {
+                        Entities.Bullets.Remove(bullet);
+                        Entities.Tanks.Remove(tank);
+                        return true;
+                    }
+                } 
+            }
+
+            //foreach (var otherBullet in Entities.Bullets)
+            //{
+            //    Position posOtherBullet = otherBullet.Pos;
+
+            //    if (otherBullet != bullet)
+            //    {
+            //        if (boxCollides(posBullet, sizeBullet, posOtherBullet, sizeBullet))
+            //        {
+            //            Entities.Bullets.Remove(bullet);
+            //            Entities.Bullets.Remove(otherBullet);
+            //            return true;
+            //        } 
+            //    }
+            //}
+
+            return false;
+        }
+
+        private void TankShoot(TankView tank, Size sizeTank, KolobokView kolobok)
+        {
+            Position pos = new Position();
+            Size size = new Size();
+
+            pos.x = 0;
+            pos.y = tank.Pos.y;
+
+            size.width = tank.Pos.x + sizeTank.width;
+            size.height = sizeTank.height;
+            
+            if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
+            {
+                if (!IsWallCollisions(pos, size))
+                {
+                    ChangeTankDirection(tank, Direction.RIGHT);
+                    InitTankBullet(tank, sizeTank); 
+                }
+            }
+
+            pos.x = tank.Pos.x;
+            pos.y = tank.Pos.y;
+
+            size.width = MapWidth - tank.Pos.x - sizeTank.width;
+            size.height = sizeTank.height;
+
+            if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
+            {
+                if (!IsWallCollisions(pos, size))
+                {
+                    ChangeTankDirection(tank, Direction.LEFT);
+                    InitTankBullet(tank, sizeTank);
+                }
+            }
+
+            pos.x = tank.Pos.x;
+            pos.y = tank.Pos.y;
+
+            size.width = sizeTank.width;
+            size.height = MapHeight - tank.Pos.y - sizeTank.height;
+
+            if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
+            {
+                if (!IsWallCollisions(pos, size))
+                {
+                    ChangeTankDirection(tank, Direction.UP);
+                    InitTankBullet(tank, sizeTank);
+                }
+            }
+
+            pos.x = tank.Pos.x;
+            pos.y = 0;
+
+            size.width = sizeTank.width;
+            size.height = tank.Pos.y + sizeTank.height;
+
+            if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
+            {
+                if (!IsWallCollisions(pos, size))
+                {
+                    ChangeTankDirection(tank, Direction.DOWN);
+                    InitTankBullet(tank, sizeTank);
+                }
+            }
+        }
+
+        private bool IsWallCollisions(Position pos, Size size)
+        {
+            foreach (var wall in Entities.Walls)
+            {
+                if (BoxCollides(pos, size, wall.Pos, wall.size))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void InitTankBullet(TankView tank, Size sizeTank)
+        {
+            Random random = new Random();
+            if (random.Next(300) < 10)
+            {
+                Position posBullet = new Position()
+                {
+                    x = tank.Pos.x + sizeTank.width / 2 - Bullet.size.width / 2,
+                    y = tank.Pos.y + sizeTank.height / 2 - Bullet.size.height / 2
+                };
+                Entities.Bullets.Add(new BulletView(posBullet, tank.Direction, true));
+            }
+        }
+
+        private void GameOver()
+        {
+            IsGameOver = true;
+            Entities.Apples.Clear();
+            Entities.Tanks.Clear();
+            Entities.Bullets.Clear();
+            Entities.Walls.Clear();
+        }
+
+        private bool BoxCollides(Position pos, Size size, Position pos2, Size size2)
+        {
+            return Collides(pos.x,
                             pos.y,
                             pos.x + size.width,
                             pos.y + size.height,
@@ -244,13 +485,13 @@ namespace Model
                             pos2.y + size2.height);
         }
 
-        private bool collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
+        private bool Collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
         {
-            return !(r <= x2 || x >= r2 ||
-                    b <= y2 || y >= b2);
+            return !(r <= x2 || x > r2 ||
+                    b <= y2 || y > b2);
         }
 
-        private void CheckPlayerBounds()
+        private void CheckKolobokCollisoins()
         {
             KolobokView kolobok = Entities.Kolobok;
             if (kolobok.Pos.x < 0)
@@ -270,6 +511,16 @@ namespace Model
             {
                 kolobok.Pos.y = MapHeight - kolobok.size.height;
             }
+
+            foreach (var apple in Entities.Apples)
+            {
+                if (BoxCollides(apple.Pos, Apple.size, kolobok.Pos, kolobok.size))
+                {
+                    Entities.Apples.Remove(apple);
+                    Score++;
+                    break;
+                }
+            }
         }
 
         private void InitTank()
@@ -287,7 +538,7 @@ namespace Model
                 Position posWall = wall.Pos;
                 Size sizeWall = wall.size;
 
-                if (boxCollides(pos, Tank.size, posWall, sizeWall))
+                if (BoxCollides(pos, Tank.size, posWall, sizeWall))
                 {
                     return;
                 }
@@ -297,10 +548,15 @@ namespace Model
             {
                 Position posTank = tank.Pos;
 
-                if (boxCollides(pos, Tank.size, posTank, Tank.size))
+                if (BoxCollides(pos, Tank.size, posTank, Tank.size))
                 {
                     return;
                 }
+            }
+
+            if (BoxCollides(pos, Tank.size, Entities.Kolobok.Pos, Entities.Kolobok.size))
+            {
+                return;
             }
 
             Direction direction = (Direction)random.Next(4);
@@ -318,6 +574,28 @@ namespace Model
                 y = random.Next(MapHeight - Apple.size.height)
             };
 
+            foreach (var wall in Entities.Walls)
+            {
+                Position posWall = wall.Pos;
+                Size sizeWall = wall.size;
+
+                if (BoxCollides(pos, Apple.size, posWall, sizeWall))
+                {
+                    return;
+                }
+            }
+
+            foreach (var tank in Entities.Tanks)
+            {
+                Position posTank = tank.Pos;
+
+                if (BoxCollides(pos, Apple.size, posTank, Apple.size))
+                {
+                    return;
+                }
+
+            }
+
             Entities.Apples.Add(new AppleView(pos));
         }
 
@@ -327,19 +605,31 @@ namespace Model
             switch (Entities.Kolobok.Direction)
             {
                 case Direction.LEFT:
-                    Entities.Kolobok.Pos.x -= speed;
+                    if (!CheckWallsCollision(-speed, 0))
+                    {
+                        Entities.Kolobok.Pos.x -= speed; 
+                    }
                     break;
 
                 case Direction.RIGHT:
-                    Entities.Kolobok.Pos.x += speed;
+                    if (!CheckWallsCollision(speed, 0))
+                    {
+                        Entities.Kolobok.Pos.x += speed; 
+                    }
                     break;
 
                 case Direction.UP:
-                    Entities.Kolobok.Pos.y -= speed;
+                    if (!CheckWallsCollision(0, -speed))
+                    {
+                        Entities.Kolobok.Pos.y -= speed; 
+                    }
                     break;
 
                 case Direction.DOWN:
-                    Entities.Kolobok.Pos.y += speed;
+                    if (!CheckWallsCollision(0, speed))
+                    {
+                        Entities.Kolobok.Pos.y += speed; 
+                    }
                     break;
             }
 
@@ -364,29 +654,69 @@ namespace Model
                         break;
                 }
             }
+
+            foreach (var bullet in Entities.Bullets)
+            {
+                switch (bullet.Direction)
+                {
+                    case Direction.LEFT:
+                        bullet.Pos.x -= 2 * speed;
+                        break;
+
+                    case Direction.RIGHT:
+                        bullet.Pos.x += 2 * speed;
+                        break;
+
+                    case Direction.UP:
+                        bullet.Pos.y -= 2 * speed;
+                        break;
+
+                    case Direction.DOWN:
+                        bullet.Pos.y += 2 * speed;
+                        break;
+                }
+            }
+        }
+
+        private bool CheckWallsCollision(int x, int y)
+        {
+            Position pos2 = new Position
+            {
+                x = Entities.Kolobok.Pos.x + x,
+                y = Entities.Kolobok.Pos.y + y
+            };
+
+            foreach (var wall in Entities.Walls)
+            {
+                Position posWall = wall.Pos;
+                Size sizeWall = wall.size;
+
+                if (BoxCollides(pos2, Entities.Kolobok.size, posWall, sizeWall))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void ChangeTankDirection(TankView tank, Direction direction)
         {
-            switch (tank.Direction)
+            switch (direction)
             {
                 case Direction.LEFT:
-                    tank.Pos.x += speed;
                     tank.Direction = Direction.RIGHT;
                     break;
 
                 case Direction.RIGHT:
-                    tank.Pos.x -= speed;
                     tank.Direction = Direction.LEFT;
                     break;
 
                 case Direction.UP:
-                    tank.Pos.y += speed;
                     tank.Direction = Direction.DOWN;
                     break;
 
                 case Direction.DOWN:
-                    tank.Pos.y -= speed;
                     tank.Direction = Direction.UP;
                     break;
             }

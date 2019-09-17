@@ -20,14 +20,17 @@ namespace View
         {
             int mapWidth = 800;
             int mapHeight = 500;
+            MovableObject.speed = 3;
+            int maxAppleCount = 5;
+            int maxTankCount = 5;
 
             ListEntities entities = new ListEntities();
-            GameModel gameModel = new GameModel(mapWidth, mapHeight, entities);
+            GameModel gameModel = new GameModel(mapWidth, mapHeight, entities, maxAppleCount, maxTankCount);
             PackmanController controller = new PackmanController(gameModel);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain(controller, entities, gameModel, mapWidth, mapHeight));
+            Application.Run(new FormMain(controller, entities, mapWidth, mapHeight));
         }
     }
 }

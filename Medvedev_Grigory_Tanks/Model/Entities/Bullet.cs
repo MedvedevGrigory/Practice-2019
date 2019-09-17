@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Bullet
+    public class Bullet : MovableObject
     {
-        public Size size = new Size() { width = 20, height = 20 };
+        public static Size size = new Size()
+        {
+            width = 10,
+            height = 10
+        };
 
+        public bool isEnemyBullet;
+
+        public Bullet(bool isEnemyBullet)
+        {
+            this.isEnemyBullet = isEnemyBullet;
+        }
     }
 }

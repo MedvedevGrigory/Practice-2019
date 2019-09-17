@@ -10,14 +10,13 @@ namespace Controller
     public class PackmanController
     {
         GameModel gameModel;
-        public bool GameOver => gameModel.GameOver;
+        public bool IsGameOver => gameModel.IsGameOver;
+        public int Score => gameModel.Score;
 
         public PackmanController(GameModel gameModel)
         {
             this.gameModel = gameModel;
         }
-
-        public int Score { get => throw new NotImplementedException(); }
 
         public void NewGame()
         {
@@ -34,9 +33,9 @@ namespace Controller
             gameModel.ChangeKolobokDirection(direction);
         }
 
-        public static void Shoot()
+        public void Shoot()
         {
-            throw new NotImplementedException();
+            gameModel.Shoot();
         }
     }
 }

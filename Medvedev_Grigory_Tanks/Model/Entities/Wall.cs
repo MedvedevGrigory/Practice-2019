@@ -8,6 +8,10 @@ namespace Model
 {
     public class Wall : FixObject
     {
-        public Size size = new Size() { width = 50, height = 50 };
+        public Size size = new Size()
+        {
+            width = 50,
+            height = 50
+        };
     }
 }

@@ -3,17 +3,23 @@ using System.Drawing;
 
 namespace Model
 {
-    public class BulletView : Bullet
+    public class BulletView : Bullet, IMovable
     {
-        public BulletView()
-        {
-        }
+        Sprite spriteDrow = new Sprite();
+        public Position Pos;
 
-        public Position Pos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Direction Direction { get; set; }
+
+        public BulletView(Position pos, Direction direction, bool isEnemyBullet) : base(isEnemyBullet)
+        {
+            Pos = pos;
+            Direction = direction;
+            sprite = Image.FromFile(@"..\..\..\Sprites\Bullet.png");
+        }
 
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
+            spriteDrow.Draw(graphics, Pos, size, sprite);
         }
     }
 }

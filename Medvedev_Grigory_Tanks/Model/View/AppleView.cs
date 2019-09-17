@@ -6,12 +6,12 @@ namespace Model
     public class AppleView : Apple
     {
         Sprite spriteDrow = new Sprite();
-        Position Pos;
+        public Position Pos;
 
         public AppleView(Position pos)
         {
             Pos = pos;
-            sprite = Image.FromFile(@"..\..\..\Sprites\KolobokR.png");
+            sprite = Image.FromFile(@"..\..\..\Sprites\Apple.png");
         }
 
         public void Draw(Graphics graphics)

@@ -8,7 +8,11 @@ namespace Model
 {
     public class Kolobok : MovableObject
     {
-        public Size size = new Size() { width = 50, height = 50 };
+        public Size size = new Size()
+        {
+            width = 50,
+            height = 50
+        };
 
     }
 }

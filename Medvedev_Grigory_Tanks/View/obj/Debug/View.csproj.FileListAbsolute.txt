@@ -43,3 +43,4 @@ C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.csproj.CopyComplete
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.exe
 C:\Users\aHTu6u0TuK\Desktop\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.pdb
+C:\Users\User\Desktop\Practice-2019\Medvedev_Grigory_Tanks\View\obj\Debug\View.FormReport.resources

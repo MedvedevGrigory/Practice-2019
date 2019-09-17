@@ -16,22 +16,25 @@ namespace View
     {
         public PackmanController Controller { get; set; }
         public ListEntities Entities { get; set; }
-        public GameModel GameModel { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
+        FormReport form;
+
+
         Bitmap map;
         Graphics graphics;
-        public bool GameOver => Controller.GameOver;
-        public int Score { get; set; }
 
-        public FormMain(PackmanController controller, ListEntities entities, GameModel gameModel, int mapWidth, int mapHeight)
+        public bool IsGameOver => Controller.IsGameOver;
+        public int Score => Controller.Score;
+
+        public FormMain(PackmanController controller, ListEntities entities, int mapWidth, int mapHeight)
         {
             InitializeComponent();
             Controller = controller;
             Entities = entities;
-            GameModel = gameModel;
             MapWidth = mapWidth;
             MapHeight = mapHeight;
+
 
             controller.NewGame();
 
@@ -42,16 +45,16 @@ namespace View
 
         private void Draw()
         {
-            if (!GameOver)
+            if (!IsGameOver)
             {
                 graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
-                
+
                 Entities.Kolobok.Draw(graphics);
 
-                //foreach (var apple in Entities.Apples)
-                //{
-                //    apple.Draw(graphics);
-                //}
+                foreach (var apple in Entities.Apples)
+                {
+                    apple.Draw(graphics);
+                }
                 foreach (var wall in Entities.Walls)
                 {
                     wall.Draw(graphics);
@@ -61,51 +64,77 @@ namespace View
                 {
                     tank.Draw(graphics);
                 }
-                /*
+                
                 foreach (var bullet in Entities.Bullets)
                 {
                     bullet.Draw(graphics);
-                }*/
+                }
+
+                graphics.DrawString($"Score : {Score}", new Font(FontFamily.GenericSansSerif, 20), new SolidBrush(Color.White), 660, 0);
             }
             else
             {
                 graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, MapWidth, MapHeight);
-                graphics.DrawString("Game over", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 300, 200);
+                graphics.DrawString("Game over", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 300, 150);
+                graphics.DrawString($"Score : {Score}", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 320, 230);
+                graphics.DrawString("Press SPACE for new game", new Font(FontFamily.GenericSansSerif, 30), new SolidBrush(Color.White), 150, 350);
             }
+
             pictureBox.Image = map;
         }
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            if (!IsGameOver)
             {
-                case Keys.W:
-                    Controller.ChangeKolobokDirection(Direction.UP);
-                    break;
-                case Keys.A:
-                    Controller.ChangeKolobokDirection(Direction.LEFT);
-                    break;
-                case Keys.S:
-                    Controller.ChangeKolobokDirection(Direction.DOWN);
-                    break;
-                case Keys.D:
-                    Controller.ChangeKolobokDirection(Direction.RIGHT);
-                    break;
-                case Keys.R:
-                    FormReport form = new FormReport();
-                    form.Show();
-                    break;
-                case Keys.Space:
-                    PackmanController.Shoot();
-                    break;
-                default:break;
+                switch (e.KeyCode)
+                {
+                    case Keys.W:
+                        Controller.ChangeKolobokDirection(Direction.UP);
+                        break;
+
+                    case Keys.A:
+                        Controller.ChangeKolobokDirection(Direction.LEFT);
+                        break;
+
+                    case Keys.S:
+                        Controller.ChangeKolobokDirection(Direction.DOWN);
+                        break;
+
+                    case Keys.D:
+                        Controller.ChangeKolobokDirection(Direction.RIGHT);
+                        break;
+
+                    case Keys.R:
+                        if (form == null || form.IsDisposed)
+                        {
+                            form = new FormReport(Entities);
+                            form.Show();
+                        }
+                        form.KeyDown += FormMain_KeyDown;
+                        break;
+
+                    case Keys.Space:
+                        Controller.Shoot();
+                        break;
+                }
+            }
+            else
+            {
+                if (e.KeyCode == Keys.Space)
+                {
+                    Controller.NewGame();
+                }
             }
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            Controller.Update();
-            Draw();
+            if (!IsGameOver)
+            {
+                Controller.Update();
+                Draw();
+            }
         }
     }
 }
