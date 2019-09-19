@@ -7,33 +7,24 @@ namespace Model
     {
         Sprite spriteDraw = new Sprite();
         public Position Pos;
+        public Image currentSprite;
 
         public TankView(Position pos, Direction direction)
         {
             Pos = pos;
             Direction = direction;
-            switch (direction)
-            {
-                case Direction.LEFT:
-                    sprite = Image.FromFile(@"..\..\..\Sprites\TankL.png");
-                    break;
-                case Direction.RIGHT:
-                    sprite = Image.FromFile(@"..\..\..\Sprites\TankR.png");
-                    break;
-                case Direction.UP:
-                    sprite = Image.FromFile(@"..\..\..\Sprites\TankU.png");
-                    break;
-                case Direction.DOWN:
-                    sprite = Image.FromFile(@"..\..\..\Sprites\TankD.png");
-                    break;
-            }
+
+            sprite[0] = Image.FromFile(@"..\..\..\Sprites\TankL.png");
+            sprite[1] = Image.FromFile(@"..\..\..\Sprites\TankR.png");
+            sprite[2] = Image.FromFile(@"..\..\..\Sprites\TankU.png");
+            sprite[3] = Image.FromFile(@"..\..\..\Sprites\TankD.png");
         }
 
         public Direction Direction { get; set; }
 
         public void Draw(Graphics graphics)
         {
-            spriteDraw.Draw(graphics, Pos, size, sprite);
+            spriteDraw.Draw(graphics, Pos, size, currentSprite);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Model
 {
     public class GameObject
     {
-        public Image sprite;
+        public Image[] sprite = new Image[4];
     }
 }

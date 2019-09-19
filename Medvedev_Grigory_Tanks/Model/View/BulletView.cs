@@ -7,6 +7,7 @@ namespace Model
     {
         Sprite spriteDrow = new Sprite();
         public Position Pos;
+        public new Image sprite;
 
         public Direction Direction { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Model
 {
@@ -43,16 +42,16 @@ namespace Model
             switch (direction)
             {
                 case Direction.LEFT:
-                    Entities.Kolobok.sprite = Image.FromFile(@"..\..\..\Sprites\KolobokL.png");
+                    Entities.Kolobok.currentSprite = Entities.Kolobok.sprite[0];
                     break;
                 case Direction.RIGHT:
-                    Entities.Kolobok.sprite = Image.FromFile(@"..\..\..\Sprites\KolobokR.png");
+                    Entities.Kolobok.currentSprite = Entities.Kolobok.sprite[1];
                     break;
                 case Direction.UP:
-                    Entities.Kolobok.sprite = Image.FromFile(@"..\..\..\Sprites\KolobokU.png");
+                    Entities.Kolobok.currentSprite = Entities.Kolobok.sprite[2];
                     break;
                 case Direction.DOWN:
-                    Entities.Kolobok.sprite = Image.FromFile(@"..\..\..\Sprites\KolobokD.png");
+                    Entities.Kolobok.currentSprite = Entities.Kolobok.sprite[3];
                     break;
                 default:
                     break;
@@ -97,7 +96,7 @@ namespace Model
             pos.y = 360;
             for (int i = 0; i < 3; i++)
             {
-                Entities.Walls.Add(new WallView(pos));
+                Entities.Walls.Add(new DestroyWallView(pos));
                 pos.x += 50;
             }
 
@@ -105,7 +104,7 @@ namespace Model
             pos.y = 60;
             for (int i = 0; i < 4; i++)
             {
-                Entities.Walls.Add(new WallView(pos));
+                Entities.Walls.Add(new DestroyWallView(pos));
                 pos.y += 50;
             }
 
@@ -129,7 +128,7 @@ namespace Model
             pos.y = 130;
             for (int i = 0; i < 6; i++)
             {
-                Entities.Walls.Add(new WallView(pos));
+                Entities.Walls.Add(new WaterView(pos));
                 pos.x += 50;
             }
 
@@ -185,16 +184,19 @@ namespace Model
                 switch (tank.Direction)
                 {
                     case Direction.LEFT:
-                        tank.sprite = Image.FromFile(@"..\..\..\Sprites\TankL.png");
+                        tank.currentSprite = tank.sprite[0];
                         break;
+
                     case Direction.RIGHT:
-                        tank.sprite = Image.FromFile(@"..\..\..\Sprites\TankR.png");
+                        tank.currentSprite = tank.sprite[1];
                         break;
+
                     case Direction.UP:
-                        tank.sprite = Image.FromFile(@"..\..\..\Sprites\TankU.png");
+                        tank.currentSprite = tank.sprite[2];
                         break;
+
                     case Direction.DOWN:
-                        tank.sprite = Image.FromFile(@"..\..\..\Sprites\TankD.png");
+                        tank.currentSprite = tank.sprite[3];
                         break;
                 }
             }
@@ -259,7 +261,6 @@ namespace Model
                         {
                             ChangeTankDirection(tank, tank.Direction);
                             MoveTank(tank);
-                            //ChangeTankDirection(otherTank, otherTank.Direction);
                             break;
                         }
                     }
@@ -313,7 +314,7 @@ namespace Model
                 {
                     GameOver();
                     return true;
-                } 
+                }
             }
 
             if ((posBullet.x < 0) ||
@@ -332,8 +333,28 @@ namespace Model
 
                 if (BoxCollides(posBullet, sizeBullet, posWall, sizeWall))
                 {
-                    Entities.Bullets.Remove(bullet);
-                    return true;
+                    if (wall is WaterView)
+                    {
+                        return true; 
+                    }
+                    else
+                    {
+                        if (wall is DestroyWallView)
+                        {
+                            Entities.Bullets.Remove(bullet);
+                            wall.CountBullet--;
+                            if (wall.CountBullet == 0)
+                            {
+                                Entities.Walls.Remove(wall);
+                            }
+                            return true;
+                        }
+                        else
+                        {
+                            Entities.Bullets.Remove(bullet);
+                            return true;
+                        }
+                    }
                 }
             }
 
@@ -441,9 +462,12 @@ namespace Model
         {
             foreach (var wall in Entities.Walls)
             {
-                if (BoxCollides(pos, size, wall.Pos, wall.size))
+                if (!(wall is WaterView) && !(wall is DestroyWallView))
                 {
-                    return true;
+                    if (BoxCollides(pos, size, wall.Pos, wall.size))
+                    {
+                        return true;
+                    } 
                 }
             }
 

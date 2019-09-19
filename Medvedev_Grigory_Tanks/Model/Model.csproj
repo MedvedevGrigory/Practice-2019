@@ -51,6 +51,7 @@
     <Compile Include="View\BulletView.cs" />
     <Compile Include="Entities\Apple.cs" />
     <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="View\DestroyWallView.cs" />
     <Compile Include="View\IMovable.cs" />
     <Compile Include="Entities\Kolobok.cs" />
     <Compile Include="Entities\Tank.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\TankView.cs" />
     <Compile Include="View\WallView.cs" />
+    <Compile Include="View\WaterView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

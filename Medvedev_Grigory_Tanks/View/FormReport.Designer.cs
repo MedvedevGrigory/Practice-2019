@@ -32,7 +32,6 @@
             this.timerReport = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewReport = new System.Windows.Forms.DataGridView();
             this.Player = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Walls = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Apples = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tanks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bullets = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +40,6 @@
             // 
             // timerReport
             // 
-            this.timerReport.Interval = 10;
             this.timerReport.Tick += new System.EventHandler(this.TimerReport_Tick);
             // 
             // dataGridViewReport
@@ -53,7 +51,6 @@
             this.dataGridViewReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Player,
-            this.Walls,
             this.Apples,
             this.Tanks,
             this.Bullets});
@@ -69,11 +66,6 @@
             // 
             this.Player.HeaderText = "Player";
             this.Player.Name = "Player";
-            // 
-            // Walls
-            // 
-            this.Walls.HeaderText = "Walls";
-            this.Walls.Name = "Walls";
             // 
             // Apples
             // 
@@ -110,7 +102,6 @@
         private System.Windows.Forms.Timer timerReport;
         private System.Windows.Forms.DataGridView dataGridViewReport;
         private System.Windows.Forms.DataGridViewTextBoxColumn Player;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Walls;
         private System.Windows.Forms.DataGridViewTextBoxColumn Apples;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tanks;
         private System.Windows.Forms.DataGridViewTextBoxColumn Bullets;
