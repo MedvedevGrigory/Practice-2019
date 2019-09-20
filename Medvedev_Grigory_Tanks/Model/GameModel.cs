@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Model
 {
@@ -18,14 +19,17 @@ namespace Model
         public int Score { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
-
         public bool IsGameOver { get; set; }
 
-        public ListEntities Entities;
-        int speed;
+        public ListEntities Entities { get; set; }
+
+        private const int CellSize = 50;
+        int Speed => MovableObject.speed;
 
         public int maxAppleCount = 5;
         public int maxTankCount = 5;
+
+        private string[] map;
 
         public GameModel(int mapWidth, int mapHeight, ListEntities entities, int maxAppleCount, int maxTankCount)
         {
@@ -62,85 +66,133 @@ namespace Model
         {
             IsGameOver = false;
             Score = 0;
-            Position pos = new Position() { x = 10, y = 450 };
-            Entities.Kolobok = new KolobokView(pos);
 
             Entities.Walls = new List<WallView>();
-            InitWalls();
+            //InitWalls();
 
             Entities.Apples = new List<AppleView>();
 
             Entities.Tanks = new List<TankView>();
 
             Entities.Bullets = new List<BulletView>();
+
+            InitEntities();
         }
 
-        private void InitWalls()
+        private void InitEntities()
         {
-            Position pos = new Position() { x = 60, y = 60 };
-            for (int i = 0; i < 2; i++)
+            map = File.ReadAllLines(@"..\..\..\Maps\Map1.txt");
+
+            for (int i = 0; i < map.Length; i++)
             {
-                Entities.Walls.Add(new WallView(pos));
-                pos.y += 50;
+                for (int j = 0; j < map[i].Length; j++)
+                {
+                    Position pos = new Position() { x = j * CellSize, y = i * CellSize };
+
+                    switch (map[i][j])
+                    {
+                        case 'A':
+                            Entities.Apples.Add(new AppleView(pos));
+                            break;
+
+                        case 'W':
+                            Entities.Walls.Add(new WallView(pos));
+                            break;
+
+                        case 'D':
+                            Entities.Walls.Add(new DestroyWallView(pos));
+                            break;
+
+                        case 'L':
+                            Entities.Walls.Add(new WaterView(pos));
+                            break;
+
+                        case 'T':
+                            Random random = new Random();
+                            Direction direction = (Direction)random.Next(4);
+                            pos.x += Speed;
+                            pos.y += Speed;
+                            Entities.Tanks.Add(new TankView(pos, direction));
+                            break;
+
+                        case 'K':
+                            pos.y += Speed;
+                            Entities.Kolobok = new KolobokView(pos);
+                            break;
+                    }
+                }
             }
 
-            pos.x = 60;
-            pos.y = 260;
-            for (int i = 0; i < 2; i++)
-            {
-                Entities.Walls.Add(new WallView(pos));
-                pos.y += 50;
-            }
-
-            pos.x = 60;
-            pos.y = 360;
-            for (int i = 0; i < 3; i++)
-            {
-                Entities.Walls.Add(new DestroyWallView(pos));
-                pos.x += 50;
-            }
-
-            pos.x = 170;
-            pos.y = 60;
-            for (int i = 0; i < 4; i++)
-            {
-                Entities.Walls.Add(new DestroyWallView(pos));
-                pos.y += 50;
-            }
-
-            pos.x = 280;
-            pos.y = 60;
-            for (int i = 0; i < 7; i++)
-            {
-                Entities.Walls.Add(new WallView(pos));
-                pos.y += 50;
-            }
-
-            pos.x = 690;
-            pos.y = 60;
-            for (int i = 0; i < 6; i++)
-            {
-                Entities.Walls.Add(new WallView(pos));
-                pos.y += 50;
-            }
-
-            pos.x = 330;
-            pos.y = 130;
-            for (int i = 0; i < 6; i++)
-            {
-                Entities.Walls.Add(new WaterView(pos));
-                pos.x += 50;
-            }
-
-            pos.x = 390;
-            pos.y = 250;
-            for (int i = 0; i < 6; i++)
-            {
-                Entities.Walls.Add(new WallView(pos));
-                pos.x += 50;
-            }
+            ChangeTankSprite();
         }
 
+        /*
+       private void InitWalls()
+       {
+           Position pos = new Position() { x = 60, y = 60 };
+           for (int i = 0; i < 2; i++)
+           {
+               Entities.Walls.Add(new WallView(pos));
+               pos.y += 50;
+           }
+
+           pos.x = 60;
+           pos.y = 260;
+           for (int i = 0; i < 2; i++)
+           {
+               Entities.Walls.Add(new WallView(pos));
+               pos.y += 50;
+           }
+
+           pos.x = 60;
+           pos.y = 360;
+           for (int i = 0; i < 3; i++)
+           {
+               Entities.Walls.Add(new DestroyWallView(pos));
+               pos.x += 50;
+           }
+
+           pos.x = 170;
+           pos.y = 60;
+           for (int i = 0; i < 4; i++)
+           {
+               Entities.Walls.Add(new DestroyWallView(pos));
+               pos.y += 50;
+           }
+
+           pos.x = 280;
+           pos.y = 60;
+           for (int i = 0; i < 7; i++)
+           {
+               Entities.Walls.Add(new WallView(pos));
+               pos.y += 50;
+           }
+
+           pos.x = 690;
+           pos.y = 60;
+           for (int i = 0; i < 6; i++)
+           {
+               Entities.Walls.Add(new WallView(pos));
+               pos.y += 50;
+           }
+
+           pos.x = 330;
+           pos.y = 130;
+           for (int i = 0; i < 6; i++)
+           {
+               Entities.Walls.Add(new WaterView(pos));
+               pos.x += 50;
+           }
+
+           pos.x = 390;
+           pos.y = 250;
+           for (int i = 0; i < 6; i++)
+           {
+               Entities.Walls.Add(new WallView(pos));
+               pos.x += 50;
+           }
+       }
+*/
         public void Shoot()
         {
             KolobokView kolobok = Entities.Kolobok;
@@ -166,7 +218,12 @@ namespace Model
             }
 
             CheckCollisions();
-            RandomChangeTankDirection();
+
+            Random random = new Random();
+            if (random.Next(500) < 10)
+            {
+                RandomChangeTankDirection();
+            }
 
             foreach (var tank in Entities.Tanks)
             {
@@ -208,10 +265,7 @@ namespace Model
 
             foreach (var tank in Entities.Tanks)
             {
-                if (random.Next(500) < 10)
-                {
-                    tank.Direction = (Direction)random.Next(4);
-                } 
+                tank.Direction = (Direction)random.Next(4);
             }
         }
 
@@ -243,7 +297,6 @@ namespace Model
                     return;
                 }
 
-
                 if ((tank.Pos.x < 0) ||
                     (tank.Pos.x > MapWidth - Tank.size.width) ||
                     (tank.Pos.y < 0) ||
@@ -251,6 +304,21 @@ namespace Model
                 {
                     ChangeTankDirection(tank, tank.Direction);
                     MoveTank(tank);
+                }
+
+                foreach (var wall in Entities.Walls)
+                {
+                    Position posWall = wall.Pos;
+                    Size sizeWall = wall.size;
+                    Random random = new Random();
+
+                    if (BoxCollides(tank.Pos, sizeTank, posWall, sizeWall))
+                    {
+                        ChangeTankDirection(tank, tank.Direction);
+                        MoveTank(tank);
+                        tank.Direction = (Direction)random.Next(4);
+                        break;
+                    }
                 }
 
                 foreach (var otherTank in Entities.Tanks)
@@ -265,19 +333,6 @@ namespace Model
                         }
                     }
                 }
-
-                foreach (var wall in Entities.Walls)
-                {
-                    Position posWall = wall.Pos;
-                    Size sizeWall = wall.size;
-
-                    if (BoxCollides(tank.Pos, sizeTank, posWall, sizeWall))
-                    {
-                        ChangeTankDirection(tank, tank.Direction);
-                        MoveTank(tank);
-                        break;
-                    }
-                }
             }
         }
 
@@ -286,19 +341,19 @@ namespace Model
             switch (tank.Direction)
             {
                 case Direction.LEFT:
-                    tank.Pos.x -= speed;
+                    tank.Pos.x -= Speed;
                     break;
 
                 case Direction.RIGHT:
-                    tank.Pos.x += speed;
+                    tank.Pos.x += Speed;
                     break;
 
                 case Direction.UP:
-                    tank.Pos.y -= speed;
+                    tank.Pos.y -= Speed;
                     break;
 
                 case Direction.DOWN:
-                    tank.Pos.y += speed;
+                    tank.Pos.y += Speed;
                     break;
             }
         }
@@ -415,7 +470,7 @@ namespace Model
             pos.x = tank.Pos.x;
             pos.y = tank.Pos.y;
 
-            size.width = MapWidth - tank.Pos.x - sizeTank.width;
+            size.width = MapWidth - tank.Pos.x + sizeTank.width;
             size.height = sizeTank.height;
 
             if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
@@ -431,7 +486,7 @@ namespace Model
             pos.y = tank.Pos.y;
 
             size.width = sizeTank.width;
-            size.height = MapHeight - tank.Pos.y - sizeTank.height;
+            size.height = MapHeight - tank.Pos.y + sizeTank.height;
 
             if (BoxCollides(pos, size, kolobok.Pos, kolobok.size))
             {
@@ -490,11 +545,11 @@ namespace Model
 
         private void GameOver()
         {
-            IsGameOver = true;
-            Entities.Apples.Clear();
-            Entities.Tanks.Clear();
-            Entities.Bullets.Clear();
-            Entities.Walls.Clear();
+            //IsGameOver = true;
+            //Entities.Apples.Clear();
+            //Entities.Tanks.Clear();
+            //Entities.Bullets.Clear();
+            //Entities.Walls.Clear();
         }
 
         private bool BoxCollides(Position pos, Size size, Position pos2, Size size2)
@@ -625,34 +680,33 @@ namespace Model
 
         private void Move()
         {
-            speed = MovableObject.speed;
             switch (Entities.Kolobok.Direction)
             {
                 case Direction.LEFT:
-                    if (!CheckWallsCollision(-speed, 0))
+                    if (!CheckWallsCollision(-Speed, 0))
                     {
-                        Entities.Kolobok.Pos.x -= speed; 
+                        Entities.Kolobok.Pos.x -= Speed; 
                     }
                     break;
 
                 case Direction.RIGHT:
-                    if (!CheckWallsCollision(speed, 0))
+                    if (!CheckWallsCollision(Speed, 0))
                     {
-                        Entities.Kolobok.Pos.x += speed; 
+                        Entities.Kolobok.Pos.x += Speed; 
                     }
                     break;
 
                 case Direction.UP:
-                    if (!CheckWallsCollision(0, -speed))
+                    if (!CheckWallsCollision(0, -Speed))
                     {
-                        Entities.Kolobok.Pos.y -= speed; 
+                        Entities.Kolobok.Pos.y -= Speed; 
                     }
                     break;
 
                 case Direction.DOWN:
-                    if (!CheckWallsCollision(0, speed))
+                    if (!CheckWallsCollision(0, Speed))
                     {
-                        Entities.Kolobok.Pos.y += speed; 
+                        Entities.Kolobok.Pos.y += Speed; 
                     }
                     break;
             }
@@ -662,19 +716,19 @@ namespace Model
                 switch (tank.Direction)
                 {
                     case Direction.LEFT:
-                        tank.Pos.x -= speed;
+                        tank.Pos.x -= Speed;
                         break;
 
                     case Direction.RIGHT:
-                        tank.Pos.x += speed;
+                        tank.Pos.x += Speed;
                         break;
 
                     case Direction.UP:
-                        tank.Pos.y -= speed;
+                        tank.Pos.y -= Speed;
                         break;
 
                     case Direction.DOWN:
-                        tank.Pos.y += speed;
+                        tank.Pos.y += Speed;
                         break;
                 }
             }
@@ -684,19 +738,19 @@ namespace Model
                 switch (bullet.Direction)
                 {
                     case Direction.LEFT:
-                        bullet.Pos.x -= 2 * speed;
+                        bullet.Pos.x -= 2 * Speed;
                         break;
 
                     case Direction.RIGHT:
-                        bullet.Pos.x += 2 * speed;
+                        bullet.Pos.x += 2 * Speed;
                         break;
 
                     case Direction.UP:
-                        bullet.Pos.y -= 2 * speed;
+                        bullet.Pos.y -= 2 * Speed;
                         break;
 
                     case Direction.DOWN:
-                        bullet.Pos.y += 2 * speed;
+                        bullet.Pos.y += 2 * Speed;
                         break;
                 }
             }
